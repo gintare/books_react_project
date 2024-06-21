@@ -1,14 +1,15 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import './App.css'
+// import './App.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Menu from './pages/Menu';
+import BooksMenu from './pages/BooksMenu';
 import BookList from './pages/BookList';
 import ErrorPage from './pages/ErrorPage';
 import CreateBook from './pages/CreateBook';
 import { getAllBooks } from './services/get';
 import CreateBookCategory from './pages/CreateBookCategory';
+import { getOneBook } from './services/get';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -16,11 +17,16 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Menu/>,
+      element: <BooksMenu/>,
       errorElement: <ErrorPage />,
       children: [
         {
           path:"/",
+          element: <BookList />,
+          loader: () => getAllBooks(),
+        },
+        {
+          path:"/home",
           element: <BookList />,
           loader: () => getAllBooks(),
         },
@@ -31,7 +37,12 @@ function App() {
         {
           path:"/createBookCategory",
           element: <CreateBookCategory />
-        }
+        },
+        {
+          path:"/editBook/:id",
+          element: <CreateBook />,
+          loader: ({params}) => getOneBook(params.id)
+        },
       ]
 
     }

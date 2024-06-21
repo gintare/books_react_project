@@ -5,8 +5,15 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom';
 
 export default function MediaCard({book}) {
+
+  // const editLinkClickHandler = (book_id) => {
+  //   console.log(book_id);
+  //   // "/editBook/{book.id}"
+  //   window.open("/editBook/"+book_id);
+  // }
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -30,7 +37,13 @@ export default function MediaCard({book}) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
+        <Link to = {"/editBook/" + book.id}>
+        <Button size="small" 
+        // onClick={(e) => {
+        //   e.stopPropagation()
+        //   editLinkClickHandler(book.id);
+        // }}
+        >Edit</Button></Link>
         <Button size="small">Learn More</Button>
       </CardActions>
     </Card>

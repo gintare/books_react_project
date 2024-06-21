@@ -7,7 +7,22 @@
   grid-template-columns: auto auto auto;
 }
 
-:root {
+.create-edit-book-form-content{
+  width: 500px;
+  margin:auto;
+}
+
+.create-edit-book-form-content div{
+  width: 100%;
+
+}
+
+.categories-create-form-content {
+  width: 500px;
+  margin:auto;
+}
+
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -74,4 +89,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
