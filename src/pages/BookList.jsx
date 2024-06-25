@@ -1,9 +1,11 @@
 import { useLoaderData, useNavigation } from "react-router-dom";
 import MediaCard from "../components/MediaCard";
 
+
 export default function BookList() {
   const books = useLoaderData();
   const navigation = useNavigation();
+
 
   if (navigation.state == "loading") {
     return <p>Loading...</p>;

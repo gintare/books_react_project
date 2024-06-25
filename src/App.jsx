@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, createContext } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 // import './App.css'
@@ -7,50 +7,65 @@ import BooksMenu from './pages/BooksMenu';
 import BookList from './pages/BookList';
 import ErrorPage from './pages/ErrorPage';
 import CreateBook from './pages/CreateBook';
-import { getAllBooks } from './services/get';
+import { getAllBooks, getOneCategory } from './services/get';
 import CreateBookCategory from './pages/CreateBookCategory';
 import { getOneBook } from './services/get';
+import LoginForm from './pages/LoginForm';
+import { getDefaultToken } from './services/service';
+
+export const UserContext = createContext();
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <BooksMenu/>,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path:"/",
+        element: <BookList />,
+        loader: () => getAllBooks(),
+      },
+      {
+        path:"/home",
+        element: <BookList />,
+        loader: () => getAllBooks(),
+      },
+      {
+        path:"/createBook",
+        element: <CreateBook />
+      },
+      {
+        path:"/createBookCategory",
+        element: <CreateBookCategory />
+      },
+      {
+        path:"/editBook/:id",
+        element: <CreateBook />,
+        loader: ({params}) => getOneBook(params.id)
+      },
+      {
+        path:"/authenticate",
+        element: <LoginForm />
+      },
+      {
+        path:"/editcat/:id",
+        element: <CreateBookCategory />,
+        loader: ({params}) => getOneCategory(params.id)
+      },
+    ]
+
+  }
+]);
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <BooksMenu/>,
-      errorElement: <ErrorPage />,
-      children: [
-        {
-          path:"/",
-          element: <BookList />,
-          loader: () => getAllBooks(),
-        },
-        {
-          path:"/home",
-          element: <BookList />,
-          loader: () => getAllBooks(),
-        },
-        {
-          path:"/createBook",
-          element: <CreateBook />
-        },
-        {
-          path:"/createBookCategory",
-          element: <CreateBookCategory />
-        },
-        {
-          path:"/editBook/:id",
-          element: <CreateBook />,
-          loader: ({params}) => getOneBook(params.id)
-        },
-      ]
-
-    }
-  ]);
-
+  const [userToken, setUserToken] = useState(getDefaultToken());
   return (
+    
     <>
+    <UserContext.Provider value={{ userToken, setUserToken }}>
     <RouterProvider router={router} fallbackElement={<h1>Loading...</h1>} />
+    </UserContext.Provider>
     </>
   )
 }

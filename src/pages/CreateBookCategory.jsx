@@ -5,8 +5,13 @@ import { getAllCategories } from "../services/get";
 import { deleteCategory } from "../services/delete";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { getDefaultToken } from "../services/service";
+import { Link } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 
 export default function CreateBookCategory() {
+    const categoryOne = useLoaderData(); 
+    console.log(categoryOne)
     const [ categories, setCategories] = useState([]);
     const [ update, setUpdate ] = useState(false);
     const {
@@ -36,7 +41,7 @@ export default function CreateBookCategory() {
     }
 
     const onClickDeleteHandler = async (category_id) => {
-      console.log("aaa"+category_id);
+      // console.log("aaa"+category_id);
       try{
         const result = await deleteCategory(category_id);
         if(result){
@@ -50,9 +55,18 @@ export default function CreateBookCategory() {
       }
     }
 
+    const onClickEditHandler = (category_id, category) => {
+      console.log("aaa"+category_id+ " "+category);
+      setValue("category", category);
+    }
+
     useEffect(() => {
        const getCategories = async () => {
-        try{
+        console.log(categoryOne+"****");
+        if(categoryOne){
+           setValue("category", categoryOne.category);
+        }
+        try{      
           const cat = await getAllCategories();
           if( !cat) throw new Error("No categories selected");
           setCategories(cat); 
@@ -61,7 +75,7 @@ export default function CreateBookCategory() {
         }
        }
        getCategories();
-    }, [update])
+    }, [update, categoryOne])
 
     return (<>
     <h1>Create book category</h1>
@@ -80,7 +94,8 @@ export default function CreateBookCategory() {
                 e.stopPropagation();
                 onClickDeleteHandler(category.id);
               }
-                }>Delete 🗑️</button></td></tr>;
+                }>Delete 🗑️</button>
+                <Link to={`/editcat/${category.id}`}><button>Edit 🖋️</button></Link></td></tr>;
           })}
           </tbody>
           </table>

@@ -7,6 +7,7 @@ import { MenuItem, TextField } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 // import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import { getDefaultToken } from "../services/service";
 
 export default function CreateBook() {
   const book = useLoaderData();
@@ -48,7 +49,7 @@ export default function CreateBook() {
   const handleChange = (event) => {
 
     setCategory(event.target.value);
-    console.log(event.target);
+    // console.log(event.target);
     // setAge(event.target.value);
     setValue("categoryId", event.target.value);
   };
@@ -70,7 +71,7 @@ export default function CreateBook() {
           setValue("photo", book.photo, { shouldValidate: true });
           setValue("pagesCount", book.pagesCount, { shouldValidate: true });
           setValue("categoryId", book.categoryId);
-          setCategory(book.categoryId);
+          //setCategory(book.categoryId);
         }
       } catch (error) {
         console.log(error);
