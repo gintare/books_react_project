@@ -6,8 +6,10 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
+import { deleteBook } from '../services/delete';
+import CustomizedDialogs from './CustomizedDialogs';
 
-export default function MediaCard({book}) {
+export default function MediaCard({book, setDeleteBook}) {
 
   // const editLinkClickHandler = (book_id) => {
   //   console.log(book_id);
@@ -15,7 +17,19 @@ export default function MediaCard({book}) {
   //   window.open("/editBook/"+book_id);
   // }
 
+  const deleteClickHandler = (book_id) => {
+      console.log(book_id);
+      try{
+        const data = deleteBook(book_id);
+        if(!data) throw new Error("No deletion success");
+         setDeleteBook(book_id);
+      }catch(error){
+        console.log(error);
+      }
+  }
+
   return (
+    <>
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         sx={{ height: 140 }}
@@ -27,7 +41,7 @@ export default function MediaCard({book}) {
           {book.title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-           {book.description}
+           {book.description.substring(0, 20)} <CustomizedDialogs book={book} />
         </Typography>
         <Typography variant="body2" color="text.secondary">
            { book.category && <>{book.category.category}</>}
@@ -37,15 +51,15 @@ export default function MediaCard({book}) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Link to = {"/editBook/" + book.id}>
-        <Button size="small" 
-        // onClick={(e) => {
-        //   e.stopPropagation()
-        //   editLinkClickHandler(book.id);
-        // }}
-        >Edit</Button></Link>
-        <Button size="small">Learn More</Button>
+        <Link to = {"/editBook/" + book.id}><Button size="small" >Edit</Button></Link>
+        <Button size="small" onClick={(e) =>{
+          e.stopPropagation();
+           deleteClickHandler(book.id);
+        }
+          }>Delete</Button>
       </CardActions>
     </Card>
+    
+    </>
   );
 }

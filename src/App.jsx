@@ -12,6 +12,7 @@ import CreateBookCategory from './pages/CreateBookCategory';
 import { getOneBook } from './services/get';
 import LoginForm from './pages/LoginForm';
 import { getDefaultToken } from './services/service';
+import Logout from './pages/Logout';
 
 export const UserContext = createContext();
 
@@ -53,13 +54,17 @@ const router = createBrowserRouter([
         element: <CreateBookCategory />,
         loader: ({params}) => getOneCategory(params.id)
       },
+      {
+        path:"/logout",
+        element: <Logout />
+      },
     ]
 
   }
 ]);
 
 function App() {
-  const [userToken, setUserToken] = useState(getDefaultToken());
+    const [userToken, setUserToken] = useState(getDefaultToken());
   return (
     
     <>

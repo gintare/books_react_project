@@ -14,13 +14,88 @@
 
 .create-edit-book-form-content div{
   width: 100%;
+  margin: 1rem 0;
 
+}
+
+.create-edit-book-form-content form{
+  text-align: center;
+}
+.create-edit-book-form-content button{
+  margin: 1rem;
 }
 
 .categories-create-form-content {
   width: 500px;
   margin:auto;
 }
+
+.cotegory-crete-form-content-inner form div{
+  width: 100%;
+  margin: 1rem 0rem;
+}
+
+.cotegory-crete-form-content-inner form button{
+  margin:0rem 0rem 2rem 0rem;
+  text-align: center;
+}
+
+.cotegory-crete-form-content-inner form{
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+}
+
+.login-submit-form-content {
+  width: 500px;
+  margin:auto;
+}
+
+.login-submit-form-content form{
+  text-align: center;
+}
+
+.login-submit-form-content div {
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.login-submit-form-content button{
+  margin: 1rem;
+}
+
+.logout-form-content {
+  text-align: center;
+  margin: 2rem;;
+}
+
+@media only screen and (min-width: 1400px) {
+
+  .book-content {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+
+  .categories-create-form-content {
+    width: 100%;
+  }
+
+  .create-edit-book-form-content{
+    width: 100%;
+  }
+
+  .book-content {
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+}
+
+
 
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

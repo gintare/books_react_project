@@ -16,7 +16,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 
 const pages = ['home', 'createBook', 'createBookCategory'];
-const settings = ['Login', 'Logout'];
+const settings = ['authenticate', 'logout'];
 
 
 export default function BooksMenu(){
@@ -34,12 +34,12 @@ export default function BooksMenu(){
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-    console.log("handleCloseNavMenu ");
+    // console.log("handleCloseNavMenu ");
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (event) => {
     setAnchorElUser(null);
-    console.log("setAnchorElUser");
+    // console.log(event.currentTarget.closest("li"));
   };
 
     return (<>
@@ -161,7 +161,7 @@ export default function BooksMenu(){
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                  <Link to={setting}><Typography textAlign="center">{setting}</Typography></Link>
                 </MenuItem>
               ))}
             </Menu>

@@ -3,15 +3,16 @@ import { getAllCategories } from "../services/get";
 import { Controller, useForm } from "react-hook-form";
 import { createBook } from "../services/post";
 import { useLoaderData } from "react-router-dom";
-import { MenuItem, TextField } from "@mui/material";
+import { Button, MenuItem, TextField } from "@mui/material";
 import InputLabel from '@mui/material/InputLabel';
 // import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { getDefaultToken } from "../services/service";
+import { updateBook } from "../services/put";
 
 export default function CreateBook() {
   const book = useLoaderData();
-  // console.log(book.description);
+  //console.log(book);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState('');
   const {
@@ -36,10 +37,18 @@ export default function CreateBook() {
   const onClickHandler = async (data) => {
     console.log(data);
     try {
-      const book = await createBook(data.categoryId, data);
-      if (!book) {
-        throw new Error("No book created");
+      if(book) {
+        const book1 = await updateBook(data.categoryId, data, book.id);
+        if (!book1) {
+          throw new Error("No book updated");
+        }
+      } else {
+        const book1 = await createBook(data.categoryId, data);
+        if (!book1) {
+          throw new Error("No book created");
+        }
       }
+      
       reset();
     } catch (error) {
       console.log(error);
@@ -70,7 +79,8 @@ export default function CreateBook() {
           setValue("isbn", book.isbn, { shouldValidate: true });
           setValue("photo", book.photo, { shouldValidate: true });
           setValue("pagesCount", book.pagesCount, { shouldValidate: true });
-          setValue("categoryId", book.categoryId);
+          setValue("categoryId", book.category.id);
+          // setValue("categoryId", book.categoryId);
           //setCategory(book.categoryId);
         }
       } catch (error) {
@@ -78,7 +88,7 @@ export default function CreateBook() {
       }
     };
     getCategories();
-  }, []);
+  }, [setValue, book]);
 
   return (
     <>
@@ -99,7 +109,7 @@ export default function CreateBook() {
               label="Description"
               multiline
               maxRows={4}
-              variant="standard"
+              variant="filled"
               {...register("description")}
             />
             <br />
@@ -124,35 +134,30 @@ export default function CreateBook() {
               {...register("pagesCount")}
             />
             <br />
-            {/* <Controller
-              name="categoryId"
-              control={control}
-              render={({ field }) => (
-                <select {...field}>
-                  {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.category}
-                    </option>
-                  ))}
-                </select>
-              )}
-            /> */}
 
             <InputLabel id="demo-simple-select-label">Category</InputLabel>
-            <Select
+            <Controller 
+            name="categoryId" 
+            control = {control}
+            render= {({field:{onChange, value}}) => (
+              <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={category}
+              value={value}
               label="Category"
-              onChange={handleChange}
+              onChange={onChange}
               // {...register("categoryId")}
             >
+              <MenuItem value={0}></MenuItem>
               {categories.map((category) => {
                  return <MenuItem key={category.id} value={category.id}>{category.category}</MenuItem>
               })}
             </Select>
+            )}
+            />
+
             <br />
-            <input type="submit" value="Submit" />
+            <Button variant="contained" type="submit">Submit</Button>
           </form>
         </div>
       </div>

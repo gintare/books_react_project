@@ -11,3 +11,13 @@ export const deleteCategory = async (id) => {
         });
     return data;
 }
+
+export const deleteBook = async (id) => {
+    const userToken = getDefaultToken();
+    const data = await axios.delete(`${API_URL}/api/books/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${userToken}`
+          }
+        });
+    return data;
+}
