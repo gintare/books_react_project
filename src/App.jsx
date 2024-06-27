@@ -13,6 +13,7 @@ import { getOneBook } from './services/get';
 import LoginForm from './pages/LoginForm';
 import { getDefaultToken } from './services/service';
 import Logout from './pages/Logout';
+import BookView from './pages/BookView';
 
 export const UserContext = createContext();
 
@@ -57,6 +58,11 @@ const router = createBrowserRouter([
       {
         path:"/logout",
         element: <Logout />
+      },
+      {
+        path:"/book/:id",
+        element: <BookView />,
+        loader: ({params}) => getOneBook(params.id)
       },
     ]
 

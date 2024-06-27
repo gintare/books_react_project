@@ -27,3 +27,13 @@ export const loginToBooks = async(data) => {
     const token = await axios.post(`${API_URL}/auth/authenticate`, data);
     return token.data;
 }
+
+export const createComment = async(bookId, data) => {
+    const userToken = getDefaultToken();
+    const comment = await axios.post(API_URL+"/api/books/"+bookId+"/comments", data, {
+        headers: {
+            'Authorization': `Bearer ${userToken}`
+          }
+        });
+    return comment.data;
+}

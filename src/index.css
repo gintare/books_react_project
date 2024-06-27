@@ -71,6 +71,26 @@ h1 {
   margin: 2rem;;
 }
 
+.book-content{
+  width: 700px;
+  margin:auto;
+}
+
+.comment-main-content{
+  width: 700px;
+  margin:auto;
+  padding: 1rem 0;
+}
+
+.comment-header{
+  width: 700px;
+  margin:auto;
+}
+
+.comment-main-content button{
+   margin: 2rem 0;
+}
+
 @media only screen and (min-width: 1400px) {
 
   .book-content {

@@ -50,3 +50,15 @@ export const getOneCategory = async (id) => {
  //    console.log(book.data);
     return category.data;
  }
+
+ export const getCommentsByBook = async (id) => {
+    const userToken = getDefaultToken();
+    const book = await axios.get(`${API_URL}/api/books/${id}/comments`, {
+     headers: {
+         'Authorization': `Bearer ${userToken}`
+       }
+     });
+ //    console.log(book.data);
+    return book.data;
+ }
+ 

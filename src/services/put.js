@@ -22,3 +22,13 @@ export const updateBook = async(category_id, data, books_id) => {
         });
     return book.data;
 }
+
+export const updateComment = async(book_id, data, comment_id) => {
+    const userToken = getDefaultToken();
+    const comment = await axios.put(`${API_URL}/api/books/${book_id}/comments/${comment_id}`, data, {
+        headers: {
+            'Authorization': `Bearer ${userToken}`
+          }
+        });
+    return comment.data;
+}

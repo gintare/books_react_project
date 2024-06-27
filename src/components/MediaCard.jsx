@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { deleteBook } from '../services/delete';
 import CustomizedDialogs from './CustomizedDialogs';
+import FormDialog from './FormDialog';
 
 export default function MediaCard({book, setDeleteBook}) {
 
@@ -38,7 +39,7 @@ export default function MediaCard({book, setDeleteBook}) {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {book.title}
+          <Link to={`/book/${book.id}`}>{book.title}</Link>
         </Typography>
         <Typography variant="body2" color="text.secondary">
            {book.description.substring(0, 20)} <CustomizedDialogs book={book} />
@@ -57,6 +58,8 @@ export default function MediaCard({book, setDeleteBook}) {
            deleteClickHandler(book.id);
         }
           }>Delete</Button>
+          
+          
       </CardActions>
     </Card>
     
